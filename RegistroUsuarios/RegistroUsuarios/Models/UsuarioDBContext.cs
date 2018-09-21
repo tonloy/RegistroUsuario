@@ -8,7 +8,7 @@ namespace RegistroUsuarios.Models
 {
     public class UsuarioDBContext
     {
-        //Propiedad de conexion
+        //Propiedad de conexion a la base de datos
         public SQLiteAsyncConnection Conexion { get; set; }
 
         //Constructor que solicita la base de datos

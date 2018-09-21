@@ -8,6 +8,7 @@ namespace RegistroUsuarios.Models
 {
     public class Usuario
     {
+        //Campos de la tabla Usuario
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
         public string N_usuario { get; set; }
