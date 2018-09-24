@@ -1,37 +1,36 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
 
 namespace RegistroUsuarios.Models
 {
-    public class Usuario
+    public class Persona
     {
-        //Campos de la tabla Usuario
-        [PrimaryKey,AutoIncrement]
+        //Campos de la tabla Persona
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string N_usuario { get; set; }
-        public string Clave { get; set; }
-        public string Imagen { get; set; }
-        public int Rol { get; set; }
-        [Indexed]
-        public int IdPersona { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
 
-        private UsuarioDBContext db;
+        private PersonaDBContext db;
 
-        public Usuario()
+        public Persona()
         {
 
         }
 
-        public Usuario(UsuarioDBContext BaseDatos)
+        public Persona(PersonaDBContext BaseDatos)
         {
             this.db = BaseDatos;
         }
 
         //Método para guardar
-        public Task<bool> GuardarTablaAsincrona(Usuario tabla)
+        public Task<bool> GuardarTablaAsincrona(Persona tabla)
         {
             if (this.db.Conexion.InsertAsync(tabla).Result == 1)
             {
@@ -44,13 +43,14 @@ namespace RegistroUsuarios.Models
         }
 
         //Método para la ejecución de una Query
-        public Task<List<Usuario>> QueryAsincrona(string query)
+        public Task<List<Persona>> QueryAsincrona(string query)
         {
-            return this.db.Conexion.QueryAsync<Usuario>(query);
+            
+            return this.db.Conexion.QueryAsync<Persona>(query);
         }
 
         //Metodo para eliminar
-        public Task<bool> EliminarTablaAsincrona(Usuario tabla)
+        public Task<bool> EliminarTablaAsincrona(Persona tabla)
         {
             if (this.db.Conexion.DeleteAsync(tabla).Result == 1)
             {
@@ -63,7 +63,7 @@ namespace RegistroUsuarios.Models
         }
 
         //metodo para actualizar datos
-        public Task<bool> ActualizarTablaAsincrona(Usuario tabla)
+        public Task<bool> ActualizarTablaAsincrona(Persona tabla)
         {
             if (this.db.Conexion.UpdateAsync(tabla).Result == 1)
             {
