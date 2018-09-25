@@ -20,8 +20,12 @@
                     <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
 
-                <Entry x:Name="txtUsuario" Placeholder="Usuario" BackgroundColor="Transparent" PlaceholderColor="Black" Grid.Row="0" Grid.Column="0" FontSize="Medium"></Entry>
-                <Entry x:Name="txtPassword" IsPassword="True" Placeholder="Contraseña" BackgroundColor="Transparent" PlaceholderColor="Black" Grid.Row="1" Grid.Column="0" FontSize="Medium"></Entry>
+                <Entry x:Name="txtUsuario" Placeholder="Usuario" BackgroundColor="Transparent" 
+                       TextColor="Black"
+                       PlaceholderColor="Black" Grid.Row="0" Grid.Column="0" FontSize="Medium"></Entry>
+                <Entry x:Name="txtPassword" IsPassword="True"
+                       TextColor="Black"
+                       Placeholder="Contraseña" BackgroundColor="Transparent" PlaceholderColor="Black" Grid.Row="1" Grid.Column="0" FontSize="Medium"></Entry>
                     <Image x:Name="iconoOjo" Source="eye.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Grid.Column="1" >
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding TapImagen}" NumberOfTapsRequired="1"/>
@@ -37,7 +41,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnLogin" BackgroundColor="Black" FontAttributes="Bold" TextColor="White" Text="ENTRAR" Grid.Row="0" Grid.Column="0"></Button>
+                <Button x:Name="btnLogin" BackgroundColor="Black" FontAttributes="Bold"
+                        Clicked="btnLogin_Clicked"
+                        TextColor="White" Text="ENTRAR" Grid.Row="0" Grid.Column="0"></Button>
                 <Label Text="¿Olvidó su contraseña?" FontSize="Small" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"></Label>
             </Grid>
         </StackLayout>
