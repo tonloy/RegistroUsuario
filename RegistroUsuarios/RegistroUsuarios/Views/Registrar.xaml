@@ -25,10 +25,6 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
@@ -52,23 +48,13 @@
                     <Entry  Grid.Row="1"
                             x:Name="txtApellido"
                         Grid.Column="1" />
-                    <Label Text="Edad" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="2"
-                       Grid.Column="0"/>
-                    <Entry Grid.Row="2"
-                           Keyboard="Numeric"
-                           x:Name="txtEdad"
-                       Grid.Column="1"/>
                     <Label Text="Email" 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
-                       Grid.Row="3" 
+                       Grid.Row="2" 
                        Grid.Column="0" />
-                    <Entry  Grid.Row="3"
+                    <Entry  Grid.Row="2"
                             Keyboard="Email"
                             x:Name="txtCorreo"
                         Grid.Column="1" />
@@ -76,62 +62,35 @@
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
-                       Grid.Row="4" 
+                       Grid.Row="3" 
                        Grid.Column="0" />
-                    <Entry  Grid.Row="4"
+                    <Entry  Grid.Row="3"
                             x:Name="txtDireccion"
                         Grid.Column="1" />
                     <Label Text="Teléfono" 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
-                       Grid.Row="5" 
+                       Grid.Row="4" 
                        Grid.Column="0" />
-                    <Entry  Grid.Row="5"
+                    <Entry  Grid.Row="4"
                             x:Name="txtTelefono"
-                        Grid.Column="1" />
-                    <Label Text="Usuario" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="6" 
-                       Grid.Column="0" />
-                    <Entry  Grid.Row="6"
-                            x:Name="txtUsuario"
-                        Grid.Column="1" />
-                    <Label Text="Clave" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="7" 
-                       Grid.Column="0" />
-                    <Entry  Grid.Row="7"
-                            IsPassword="True"
-                            x:Name="txtClave"
-                        Grid.Column="1" />
-                    <Label Text="Repetir clave" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="8" 
-                       Grid.Column="0" />
-                    <Entry  Grid.Row="8"
-                            x:Name="txtClaveRepetir"
                         Grid.Column="1" />
                     <Label Text="Admin." 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
-                       Grid.Row="9" 
+                       Grid.Row="5" 
                        Grid.Column="0" />
-                    <Switch  Grid.Row="9"
+                    <Switch  Grid.Row="5"
                             x:Name="txtRol"
                              IsToggled="True"
                         Grid.Column="1" />
                 </Grid>
             </Grid>
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
-                    <Button Text="Guardar" x:Name="btnGuardar"></Button>
+                    <Button Text="Siguiente" x:Name="btnSiguiente"
+                            Command="{Binding Siguiente}"></Button>
                     <Button Text="Cancelar" x:Name="btnCancelar"
                             Command="{Binding Cancelar}"></Button>
                 </StackLayout>

@@ -15,6 +15,7 @@ namespace RegistroUsuarios.ViewModels
         public ICommand ClicComando { get; set; }//guarda la accion que se ejecutara tras el clic de un boton
         public ICommand TapImagen { get; set; }//para cambiar la visibilidad de la clave de usuario
         public ICommand Cancelar { get; set; }//para cancelar el registro de usuario
+        public ICommand Siguiente { get; set; }//para navegar al formulario siguiente
 
         public CommandViewModel(INavigation nav, ref Entry clave, ref Image icono)
         {
@@ -31,11 +32,17 @@ namespace RegistroUsuarios.ViewModels
             ClicComando = new Command(FuncionNavegacion);
             TapImagen = new Command(FuncionCambiarClave);
             Cancelar = new Command(FuncionCancelar);
+            Siguiente = new Command(FuncionSig);
         }
 
         async void FuncionNavegacion()
         {
             await this.navegacion.PushModalAsync(new Registrar());
+        }
+
+        async void FuncionSig()
+        {
+            await this.navegacion.PushModalAsync(new RegistrarUser());
         }
 
         async void FuncionCancelar()
