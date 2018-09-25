@@ -12,6 +12,7 @@
                HorizontalOptions="Center"
                VerticalOptions="End"
                WidthRequest="100" 
+                       x:Name="imgUsuario"
                HeightRequest="100"
                TranslationY="-60"
                Margin="2"/>
@@ -56,6 +57,7 @@
                        Grid.Column="0" />
                         <Entry  Grid.Row="2"
                             x:Name="txtClaveRepetir"
+                                IsPassword="True"
                         Grid.Column="1" />
                         <Label Text="Admin." 
                            FontSize="Medium"

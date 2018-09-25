@@ -41,6 +41,7 @@ namespace RegistroUsuarios.Views
                 Persona p = new Persona(dbPersona);
                 usr.N_usuario = txtUsuario.Text;
                 usr.Clave = txtClave.Text;
+                usr.Imagen = imgUsuario.Source.ToString();
                 var persona = p.QueryAsincrona("Select * from [Persona] order by Id desc limit 1").Result;
                 if (persona.Count == 1)
                 {
@@ -49,7 +50,15 @@ namespace RegistroUsuarios.Views
                         per = persona.ElementAt(0);
                     }
                 }
-                usr.Rol = 1;
+                if (txtRol.IsToggled)
+                {
+                    usr.Rol = 1;
+                }
+                else
+                {
+                    usr.Rol = 0;
+                }
+                await DisplayAlert("Admin?", usr.Rol.ToString(), "Aceptar");
                 usr.IdPersona = per.Id;
                 bool resultado = await usr.GuardarTablaAsincrona(usr);
                 if (resultado)
