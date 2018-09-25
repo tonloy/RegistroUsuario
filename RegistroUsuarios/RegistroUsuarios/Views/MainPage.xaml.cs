@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using RegistroUsuarios.ViewModels;
 
 namespace RegistroUsuarios
 {
@@ -12,12 +13,7 @@ namespace RegistroUsuarios
         public MainPage()
         {
             InitializeComponent();
-        }
-
-        private void ShowPass(object sender, EventArgs args)
-        {
-            txtPassword.IsPassword = txtPassword.IsPassword ? false : true;
-            iconoOjo.Source = ImageSource.FromFile(txtPassword.IsPassword==true?"eye.png":"hide.png");
+            BindingContext = new CommandViewModel(Navigation,ref txtPassword,ref iconoOjo);
         }
     }
 }
