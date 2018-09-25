@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RegistroUsuarios.Views"
+             x:Class="RegistroUsuarios.Views.Formulario">
+  <!--Pages can be added as references or inline-->
+    <local:Registrar></local:Registrar>
+    <local:RegistrarUser></local:RegistrarUser>
+</TabbedPage>

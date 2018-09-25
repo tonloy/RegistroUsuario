@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.IO;
+using System.Linq;
 using RegistroUsuarios.Views;
+using RegistroUsuarios.Models;
 
 namespace RegistroUsuarios.ViewModels
 {
     public class CommandViewModel
     {
-        public INavigation navegacion { get; set; }//para obtener el elemento que controla la navegacion 
+        //controles de password y la imagen del ojo
         public Entry password;
         public Image ojo;
+
+        public INavigation navegacion { get; set; }//para obtener el elemento que controla la navegacion        
         public ICommand ClicComando { get; set; }//guarda la accion que se ejecutara tras el clic de un boton
         public ICommand TapImagen { get; set; }//para cambiar la visibilidad de la clave de usuario
         public ICommand Cancelar { get; set; }//para cancelar el registro de usuario
-        public ICommand Siguiente { get; set; }//para navegar al formulario siguiente
+        public ICommand AddPersona { get; set; }//para agregar una persona a la base
+        public ICommand AddUsuario { get; set; }//para agregar un usuario a la base
 
         public CommandViewModel(INavigation nav, ref Entry clave, ref Image icono)
         {
@@ -28,21 +34,14 @@ namespace RegistroUsuarios.ViewModels
         public CommandViewModel(INavigation nav)
         {
             this.navegacion = nav;
-            
             ClicComando = new Command(FuncionNavegacion);
             TapImagen = new Command(FuncionCambiarClave);
             Cancelar = new Command(FuncionCancelar);
-            Siguiente = new Command(FuncionSig);
         }
 
         async void FuncionNavegacion()
         {
-            await this.navegacion.PushModalAsync(new Registrar());
-        }
-
-        async void FuncionSig()
-        {
-            await this.navegacion.PushModalAsync(new RegistrarUser());
+            await this.navegacion.PushModalAsync(new Formulario());
         }
 
         async void FuncionCancelar()

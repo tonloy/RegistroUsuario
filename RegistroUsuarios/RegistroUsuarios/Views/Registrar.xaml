@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RegistroUsuarios.Views.Registrar"
-             Title="Registro de usuario">
+             Title="Datos persona">
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
@@ -24,12 +24,13 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Label Text="Nombre"
                            FontSize="Medium"
                            TextColor="Black"
@@ -76,21 +77,12 @@
                     <Entry  Grid.Row="4"
                             x:Name="txtTelefono"
                         Grid.Column="1" />
-                    <Label Text="Admin." 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="5" 
-                       Grid.Column="0" />
-                    <Switch  Grid.Row="5"
-                            x:Name="txtRol"
-                             IsToggled="True"
-                        Grid.Column="1" />
+                    
                 </Grid>
             </Grid>
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
-                    <Button Text="Siguiente" x:Name="btnSiguiente"
-                            Command="{Binding Siguiente}"></Button>
+                    <Button Text="Guardar" x:Name="btnGuardar1"
+                            Clicked="btnGuardar1_Clicked"></Button>
                     <Button Text="Cancelar" x:Name="btnCancelar"
                             Command="{Binding Cancelar}"></Button>
                 </StackLayout>

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RegistroUsuarios.Views.RegistrarUser">
+             x:Class="RegistroUsuarios.Views.RegistrarUser"
+             Title="Datos usuario">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -18,6 +19,7 @@
                 <Grid Padding="5" Margin="0" TranslationY="-80">
                     <Grid Padding="0" Margin="0">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -55,11 +57,21 @@
                         <Entry  Grid.Row="2"
                             x:Name="txtClaveRepetir"
                         Grid.Column="1" />
-                        
+                        <Label Text="Admin." 
+                           FontSize="Medium"
+                           TextColor="Black"
+                           VerticalOptions="Center"
+                       Grid.Row="3" 
+                       Grid.Column="0" />
+                        <Switch  Grid.Row="3"
+                            x:Name="txtRol"
+                             IsToggled="True"
+                        Grid.Column="1" />
                     </Grid>
                 </Grid>
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
-                    <Button Text="Guardar" x:Name="btnGuardar"></Button>
+                    <Button Text="Guardar" x:Name="btnGuardar"
+                            Clicked="btnGuardar_Clicked"></Button>
                     <Button Text="Cancelar" x:Name="btnCancel"
                             Command="{Binding Cancelar}"></Button>
                 </StackLayout>
