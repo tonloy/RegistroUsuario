@@ -44,7 +44,7 @@
         </Frame>
         <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,0,20,50" Padding="10,0,10,0" CornerRadius="10">
         <StackLayout>
-                <Button x:Name="btnRegistrar" Text="Registrar" FontAttributes="Bold"
+                <Button x:Name="btnRegistrar" Text="Registrarse" FontAttributes="Bold"
                         Command="{Binding ClicComando}"
                         TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Center"></Button>
         </StackLayout>
