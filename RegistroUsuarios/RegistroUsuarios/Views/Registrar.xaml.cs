@@ -16,14 +16,14 @@ namespace RegistroUsuarios.Views
 	{
         //Para la conexion a bd
         private PersonaDBContext dbPersona;
-        private string baseDatosPer = "dbPersona.db3";
+        private string baseDatos = "dbRegistro.db3";
         private string ubicacion = "";
 
         public Registrar ()
 		{
 			InitializeComponent ();
             BindingContext = new CommandViewModel(Navigation);
-            ubicacion = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), this.baseDatosPer);
+            ubicacion = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), this.baseDatos);
             this.dbPersona = new PersonaDBContext(ubicacion);
         }
 

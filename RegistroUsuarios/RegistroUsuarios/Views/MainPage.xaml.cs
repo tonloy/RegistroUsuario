@@ -15,7 +15,7 @@ namespace RegistroUsuarios
 
         //para la conexion a la bd
         private UsuarioDBContext dbUsuario;
-        private string baseDatosUser = "dbUsuario.db3";
+        private string baseDatosUser = "dbRegistro.db3";
         private string ubicacion = "";
         Usuario user = new Usuario();
 

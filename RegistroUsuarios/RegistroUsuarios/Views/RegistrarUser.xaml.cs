@@ -18,9 +18,8 @@ namespace RegistroUsuarios.Views
         //para la conexion a la bd
         private UsuarioDBContext dbUsuario;
         private PersonaDBContext dbPersona;
-        private string baseDatosUser = "dbUsuario.db3";
+        private string baseDatosUser = "dbRegistro.db3";
         private string ubicacion = "";
-        private string ubicacion1 = "";
         Persona per = new Persona();
 
         public RegistrarUser ()
@@ -28,9 +27,8 @@ namespace RegistroUsuarios.Views
 			InitializeComponent ();
             BindingContext = new CommandViewModel(Navigation);
             ubicacion = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), this.baseDatosUser);
-            ubicacion1= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dbPersona.db3");
             this.dbUsuario = new UsuarioDBContext(ubicacion);
-            this.dbPersona = new PersonaDBContext(ubicacion1);
+            this.dbPersona = new PersonaDBContext(ubicacion);
         }
 
         private async void btnGuardar_Clicked(object sender, EventArgs e)
