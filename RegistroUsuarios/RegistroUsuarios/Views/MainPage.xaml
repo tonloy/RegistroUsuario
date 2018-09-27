@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:RegistroUsuarios"
              x:Class="RegistroUsuarios.MainPage"
              BackgroundImage="fondo2"
-             Title="Inicio de Sesión">
+             Title="Inicio de Sesión" HeightRequest="30">
 
     <StackLayout VerticalOptions="Center">
         <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,50,20,5" CornerRadius="10">
