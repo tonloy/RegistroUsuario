@@ -41,7 +41,7 @@ namespace RegistroUsuarios.ViewModels
 
         async void FuncionNavegacion()
         {
-            await this.navegacion.PushModalAsync(new Formulario());
+            await this.navegacion.PushModalAsync(new Registrar());
         }
 
         async void FuncionCancelar()
