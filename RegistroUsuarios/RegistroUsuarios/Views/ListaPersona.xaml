@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RegistroUsuarios.Views"
+             x:Class="RegistroUsuarios.Views.ListaPersona"
+             BackgroundImage="fondo2"
+             Title="Lista">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,50,20,5" CornerRadius="10">
+                <ListView x:Name="PersonaLista"
+                      IsPullToRefreshEnabled="True"
+                      ItemTapped="EliminarItem"
+                      Refreshing="RefrescarLista">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="icono1.png" WidthRequest="50" HeightRequest="50"/>
+                                        <Label Text="{Binding Nombre}" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Apellido}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

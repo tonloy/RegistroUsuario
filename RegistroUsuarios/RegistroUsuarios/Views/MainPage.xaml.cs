@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using RegistroUsuarios.ViewModels;
 using RegistroUsuarios.Models;
 using System.IO;
+using RegistroUsuarios.Views;
 
 namespace RegistroUsuarios
 {
@@ -18,8 +19,8 @@ namespace RegistroUsuarios
         private PersonaDBContext dbPersona;
         private string baseDatosUser = "dbRegistro.db3";
         private string ubicacion = "";
-        Usuario user = new Usuario();
-        Persona _persona = new Persona();
+        public static Usuario user = new Usuario();
+        public static Persona _persona = new Persona();
 
         public MainPage()
         {
@@ -50,11 +51,12 @@ namespace RegistroUsuarios
                         {
                             _persona = item;
                         }
-                        await DisplayAlert("Bienvenido", _persona.Nombre, "Aceptar");
+                        //await DisplayAlert("Bienvenido", _persona.Nombre, "Aceptar");
+                        await Navigation.PushAsync(new Inicio());
                     }
                     else
                     {
-                        await DisplayAlert("Error", "No existes, sorry " + txtUsuario.Text, "Aceptar");
+                        await DisplayAlert("Error", "El usuario ingresado no existe" + txtUsuario.Text, "Aceptar");
                     }
                 }
                 else

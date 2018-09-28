@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RegistroUsuarios.Views.Bienvenido"
+             BackgroundImage="fondo2"
+             Title="Bienvenidos">
+    <ContentPage.Content>
+        <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,50,20,5" CornerRadius="10">
+            <StackLayout>
+                <Label Text="Bienvenidos"
+                   FontAttributes="Bold"
+                       x:Name="lblMensaje"
+                   FontSize="Large"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+                <Button Text="Acerca de" Command="{Binding Acerca}"/>
+                <Button Text="Cerrar Sesión" 
+                        Clicked="btnCerrarSeccion_Clicked"
+                        x:Name="btnCerrarSeccion"/>
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

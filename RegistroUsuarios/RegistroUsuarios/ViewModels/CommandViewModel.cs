@@ -22,6 +22,7 @@ namespace RegistroUsuarios.ViewModels
         public ICommand ClicComando { get; set; }//guarda la accion que se ejecutara tras el clic de un boton
         public ICommand TapImagen { get; set; }//para cambiar la visibilidad de la clave de usuario
         public ICommand Cancelar { get; set; }//para cancelar el registro de usuario
+        public ICommand Acerca { get; set; }
 
         ////Declaracion de variables
         private static ValidatableObject<string> nombre;
@@ -180,6 +181,7 @@ namespace RegistroUsuarios.ViewModels
             ClicComando = new Command(FuncionNavegacion);
             TapImagen = new Command(FuncionCambiarClave);
             Cancelar = new Command(FuncionCancelar);
+            Acerca = new Command(AbrirAcercade);
         }
 
         public CommandViewModel(INavigation nav,Page pagina)
@@ -387,5 +389,11 @@ namespace RegistroUsuarios.ViewModels
             password.IsPassword = password.IsPassword ? false : true;
             ojo.Source = ImageSource.FromFile(password.IsPassword == true ? "eye.png" : "hide.png");
         }
+
+        void AbrirAcercade()
+        {
+            this.navegacion.PushAsync(new AcercaDe());
+        }
+
     }
 }
