@@ -24,7 +24,7 @@ namespace RegistroUsuarios
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new CommandViewModel(Navigation,ref txtPassword,ref iconoOjo);
+            BindingContext = new CommandViewModel(Navigation,ref txtPassword,ref iconoOjo,this);
             ubicacion = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), this.baseDatosUser);
             dbUsuario = new UsuarioDBContext(ubicacion);
             dbPersona = new PersonaDBContext(ubicacion);
@@ -34,26 +34,34 @@ namespace RegistroUsuarios
         {
             try
             {
-                Usuario usrExiste = new Usuario(dbUsuario);
-                Persona persona = new Persona(dbPersona);
-                var usuario = usrExiste.QueryAsincrona("Select * from Usuario where N_usuario='" + txtUsuario.Text + "' and Clave='" + txtPassword.Text + "'").Result;
-                if (usuario.Count == 1)
+                if (CommandViewModel.ValidarInicio())
                 {
-                    foreach (var item in usuario)
+                    Usuario usrExiste = new Usuario(dbUsuario);
+                    Persona persona = new Persona(dbPersona);
+                    var usuario = usrExiste.QueryAsincrona("Select * from Usuario where N_usuario='" + txtUsuario.Text + "' and Clave='" + txtPassword.Text + "'").Result;
+                    if (usuario.Count == 1)
                     {
-                        user = usuario.ElementAt(0);
+                        foreach (var item in usuario)
+                        {
+                            user = usuario.ElementAt(0);
+                        }
+                        var persona_ = persona.QueryAsincrona("Select * from Persona where Id=" + user.IdPersona).Result;
+                        foreach (var item in persona_)
+                        {
+                            _persona = item;
+                        }
+                        await DisplayAlert("Bienvenido", _persona.Nombre, "Aceptar");
                     }
-                    var persona_ = persona.QueryAsincrona("Select * from Persona where Id=" +user.IdPersona).Result;
-                    foreach (var item in persona_)
+                    else
                     {
-                        _persona = item;
+                        await DisplayAlert("Error", "No existes, sorry " + txtUsuario.Text, "Aceptar");
                     }
-                    await DisplayAlert("Bienvenido", _persona.Nombre, "Aceptar");
                 }
                 else
                 {
-                    await DisplayAlert("Error", "No existes, sorry " + txtUsuario.Text, "Aceptar");
+                    await DisplayAlert("Error!", "Campos vacíos o inválidos", "Aceptar");
                 }
+                
             }catch(Exception er)
             {
                 await DisplayAlert("Error",er.Message, "Aceptar");

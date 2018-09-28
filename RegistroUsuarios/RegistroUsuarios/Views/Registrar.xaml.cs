@@ -25,24 +25,31 @@ namespace RegistroUsuarios.Views
         public Registrar ()
 		{
 			InitializeComponent ();
-            BindingContext = new CommandViewModel(Navigation);
+            BindingContext = new CommandViewModel(Navigation,this);
             ubicacion = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), this.baseDatos);
             this.dbPersona = new PersonaDBContext(ubicacion);
             this.dbUsuario = new UsuarioDBContext(ubicacion);
         }
 
-        private  void btnGuardar1_Clicked(object sender, EventArgs e)
+        private async void btnGuardar1_Clicked(object sender, EventArgs e)
         {
-            pers = new Persona(dbPersona);
-            pers.Nombre = txtNombre.Text;
-            pers.Apellido = txtApellido.Text;
-            pers.Correo = txtCorreo.Text;
-            pers.Direccion = txtDireccion.Text;
-            pers.Telefono = txtTelefono.Text;
+            if (CommandViewModel.Validar())
+            {
+                pers = new Persona(dbPersona);
+                pers.Nombre = txtNombre.Text;
+                pers.Apellido = txtApellido.Text;
+                pers.Correo = txtCorreo.Text;
+                pers.Direccion = txtDireccion.Text;
+                pers.Telefono = txtTelefono.Text;
 
-            
-            boxUsuario.IsVisible = true;
-            boxPersona.IsVisible = false;
+
+                boxUsuario.IsVisible = true;
+                boxPersona.IsVisible = false;
+            }
+            else
+            {
+                await DisplayAlert("Error!","Campos vacíos o inválidos","Aceptar");
+            }           
 
         }
 
@@ -50,34 +57,45 @@ namespace RegistroUsuarios.Views
         {
             try
             {
-                bool resultado1 = await pers.GuardarTablaAsincrona(pers);
-                Usuario usr = new Usuario(dbUsuario);
-                Persona p = new Persona(dbPersona);
-                usr.N_usuario = txtUsuario.Text;
-                usr.Clave = txtClave.Text;
-                usr.Imagen = imgUsuario.Source.ToString();
-                //recupero la ultima persona insertada
-                var persona = p.QueryAsincrona("Select * from [Persona] order by Id desc limit 1").Result;
-                if (persona.Count == 1)
+                if (CommandViewModel.ValidarU())
                 {
-                    foreach (var item in persona)
-                    {
-                        per = persona.ElementAt(0);
+                    if (txtClave.Text!=txtClaveRepetir.Text) {
+                        await DisplayAlert("Error!", "Las claves no coinciden", "Aceptar");
+                        return;
                     }
-                }
-                usr.Rol = 1;
-                
-                usr.IdPersona = per.Id;
-                bool resultado = await usr.GuardarTablaAsincrona(usr);
-                
-                if (resultado && resultado1)
-                {
-                    await DisplayAlert("Exito!", "Usuario agregado", "Aceptar");
-                    await Navigation.PopModalAsync();
+                    bool resultado1 = await pers.GuardarTablaAsincrona(pers);
+                    Usuario usr = new Usuario(dbUsuario);
+                    Persona p = new Persona(dbPersona);
+                    usr.N_usuario = txtUsuario.Text;
+                    usr.Clave = txtClave.Text;
+                    usr.Imagen = imgUsuario.Source.ToString();
+                    //recupero la ultima persona insertada
+                    var persona = p.QueryAsincrona("Select * from [Persona] order by Id desc limit 1").Result;
+                    if (persona.Count == 1)
+                    {
+                        foreach (var item in persona)
+                        {
+                            per = persona.ElementAt(0);
+                        }
+                    }
+                    usr.Rol = 1;
+
+                    usr.IdPersona = per.Id;
+                    bool resultado = await usr.GuardarTablaAsincrona(usr);
+
+                    if (resultado && resultado1)
+                    {
+                        await DisplayAlert("Exito!", "Usuario agregado", "Aceptar");
+                        await Navigation.PopModalAsync();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error!", "Usuario no agregado", "Aceptar");
+                    }
                 }
                 else
                 {
-                    await DisplayAlert("Error!", "Usuario no agregado", "Aceptar");
+                    await DisplayAlert("Error!", "Campos vacíos o inválidos", "Aceptar");
                 }
             }
             catch (Exception ex)

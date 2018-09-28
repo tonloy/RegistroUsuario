@@ -2,9 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:RegistroUsuarios"
+             xmlns:converters="clr-namespace:RegistroUsuarios.Models;assembly=RegistroUsuarios"
+             xmlns:behaviors="clr-namespace:RegistroUsuarios.Behaviors;assembly=RegistroUsuarios"
              x:Class="RegistroUsuarios.MainPage"
              BackgroundImage="fondo2"
              Title="Inicio de Sesión" HeightRequest="30">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout VerticalOptions="Center">
         <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,50,20,5" CornerRadius="10">
@@ -13,7 +21,9 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -22,11 +32,53 @@
 
                 <Entry x:Name="txtUsuario" Placeholder="Usuario" BackgroundColor="Transparent" 
                        TextColor="Black"
-                       PlaceholderColor="Black" Grid.Row="0" Grid.Column="0" FontSize="Medium"></Entry>
+                       Text="{Binding Usuario.Value, Mode=TwoWay}"
+                       PlaceholderColor="Black" Grid.Row="0" Grid.Column="0" FontSize="Medium">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateUsuarioCommand}" />
+                        </Entry.Behaviors>
+                        <Entry.Triggers>
+                            <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Usuario.IsValid}"
+							            Value="False">
+                                <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+                <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="1" Grid.Column="0"
+			                    Text="{Binding Usuario.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Entry x:Name="txtPassword" IsPassword="True"
                        TextColor="Black"
-                       Placeholder="Contraseña" BackgroundColor="Transparent" PlaceholderColor="Black" Grid.Row="1" Grid.Column="0" FontSize="Medium"></Entry>
-                    <Image x:Name="iconoOjo" Source="eye.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Grid.Column="1" >
+                       Text="{Binding Clave.Value, Mode=TwoWay}"
+                       Placeholder="Contraseña" BackgroundColor="Transparent" PlaceholderColor="Black" Grid.Row="2" Grid.Column="0" FontSize="Medium">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateClaveCommand}" />
+                        </Entry.Behaviors>
+                        <Entry.Triggers>
+                            <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Clave.IsValid}"
+							            Value="False">
+                                <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+                <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="3" Grid.Column="0"
+			                    Text="{Binding Clave.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                    <Image x:Name="iconoOjo" Source="eye.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="1" >
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding TapImagen}" NumberOfTapsRequired="1"/>
                         </Image.GestureRecognizers>

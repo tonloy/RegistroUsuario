@@ -1,29 +1,16 @@
-﻿using System;
+﻿using RegistroUsuarios.Validations;
+using RegistroUsuarios.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System.IO;
-using System.Linq;
-using RegistroUsuarios.Views;
-using RegistroUsuarios.Models;
-using RegistroUsuarios.ViewModels.Base;
-using RegistroUsuarios.Validations;
 
 namespace RegistroUsuarios.ViewModels
 {
-    public class CommandViewModel:BaseViewModel
+    public class ValidacionViewModel:BaseViewModel
     {
-        //controles de password y la imagen del ojo
-        public Entry password;
-        public Image ojo;
-
-        public INavigation navegacion { get; set; }//para obtener el elemento que controla la navegacion        
-        public ICommand ClicComando { get; set; }//guarda la accion que se ejecutara tras el clic de un boton
-        public ICommand TapImagen { get; set; }//para cambiar la visibilidad de la clave de usuario
-        public ICommand Cancelar { get; set; }//para cancelar el registro de usuario
-
-        ////Declaracion de variables
+        //Declaracion de variables
         private static ValidatableObject<string> nombre;
         private static ValidatableObject<string> apellido;
         private static ValidatableObject<string> direccion;
@@ -151,45 +138,9 @@ namespace RegistroUsuarios.ViewModels
         public ICommand ValidateClave2Command => new Command(() => ValidarClave2());
         private static Page contexto;
 
-        public CommandViewModel(INavigation nav, ref Entry _clave, ref Image icono, Page pagina)
+        public ValidacionViewModel(Page pagina)
         {
-            this.navegacion = nav;
-            this.password = _clave;
-            this.ojo = icono;
-            ClicComando = new Command(FuncionNavegacion);
-            TapImagen = new Command(FuncionCambiarClave);
-
-            //Inicializamos las propiedades
-            nombre = new ValidatableObject<string>();
-            apellido = new ValidatableObject<string>();
-            direccion = new ValidatableObject<string>();
-            telefono = new ValidatableObject<string>();
-            correo = new ValidatableObject<string>();
-            usuario = new ValidatableObject<string>();
-            clave = new ValidatableObject<string>();
-            clave2 = new ValidatableObject<string>();
-
-            //Agregamos las validaciones
-            this.AgregarValidaciones();
-
-            contexto = pagina;
-        }
-        public CommandViewModel(INavigation nav)
-        {
-            this.navegacion = nav;
-            ClicComando = new Command(FuncionNavegacion);
-            TapImagen = new Command(FuncionCambiarClave);
-            Cancelar = new Command(FuncionCancelar);
-        }
-
-        public CommandViewModel(INavigation nav,Page pagina)
-        {
-            //Navegacion
-            this.navegacion = nav;
-            ClicComando = new Command(FuncionNavegacion);
-            TapImagen = new Command(FuncionCambiarClave);
-            Cancelar = new Command(FuncionCancelar);
-
+            
             //Validaciones
             //Inicializamos las propiedades
             nombre = new ValidatableObject<string>();
@@ -203,7 +154,8 @@ namespace RegistroUsuarios.ViewModels
 
             //Agregamos las validaciones
             this.AgregarValidaciones();
-            
+            //this.CommandValidacionPersona = new Command(Validar);
+            //this.CommandValidacionUsuario = new Command(this.ValidarU);
             contexto = pagina;
         }
 
@@ -234,20 +186,10 @@ namespace RegistroUsuarios.ViewModels
                 ValidationMessage = "El nombre es requerido"
             });
 
-            nombre.Validations.Add(new NoNumRule<string>
-            {
-                ValidationMessage = "El nombre solo acepta letras"
-            });
-
             //Agregamos la validacion de apellido
             apellido.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
                 ValidationMessage = "El apellido es requerido"
-            });
-
-            apellido.Validations.Add(new NoNumRule<string>
-            {
-                ValidationMessage = "El apellido solo acepta letras"
             });
 
             //Agregamos la validacion de direccion
@@ -261,15 +203,9 @@ namespace RegistroUsuarios.ViewModels
             {
                 ValidationMessage = "El teléfono es requerido"
             });
-
             telefono.Validations.Add(new PhoneRule<string>
             {
                 ValidationMessage = "El teléfono no es válido"
-            });
-
-            telefono.Validations.Add(new NumRule<string>
-            {
-                ValidationMessage = "El teléfono solo acepta números"
             });
 
             //Agregamos la validacion de clave
@@ -290,37 +226,28 @@ namespace RegistroUsuarios.ViewModels
             //Verificamos que pasan las validaciones
             if (ValidarCorreo() && ValidarDireccion() && ValidarTelefono() && ValidarNombre() && ValidarApellido())
             {
+                //Mostramos el mensaje de validacion correcta
+                //await contexto.DisplayAlert("Validaciones", "Validación Correcta!", "Aceptar");
                 return true;
             }
             else
             {
+                //await contexto.DisplayAlert("Validaciones", "Error en la validación!", "Aceptar");
                 return false;
             }
         }
 
-        public static bool ValidarU()
+        public  async void ValidarU()
         {
             //Verificamos que pasan las validaciones
             if (ValidarUsuario() && ValidarClave() && ValidarClave2())
             {
-                return true;
+                //Mostramos el mensaje de validacion correcta
+                await contexto.DisplayAlert("Validaciones", "Validación Correcta!", "Aceptar");
             }
             else
             {
-                return false;
-            }
-        }
-
-        public static bool ValidarInicio()
-        {
-            //Verificamos que pasan las validaciones
-            if (ValidarUsuario() && ValidarClave())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
+                await contexto.DisplayAlert("Validaciones", "Error en la validación!", "Aceptar");
             }
         }
 
@@ -370,22 +297,6 @@ namespace RegistroUsuarios.ViewModels
         private static bool ValidarApellido()
         {
             return apellido.Validate();
-        }
-
-        async void FuncionNavegacion()
-        {
-            await this.navegacion.PushModalAsync(new Registrar());            
-        }
-
-        async void FuncionCancelar()
-        {
-            await this.navegacion.PopModalAsync();
-        }
-
-        void FuncionCambiarClave()
-        {
-            password.IsPassword = password.IsPassword ? false : true;
-            ojo.Source = ImageSource.FromFile(password.IsPassword == true ? "eye.png" : "hide.png");
         }
     }
 }

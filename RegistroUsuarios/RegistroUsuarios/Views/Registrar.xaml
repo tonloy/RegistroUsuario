@@ -1,92 +1,211 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:RegistroUsuarios.Models;assembly=RegistroUsuarios"
+             xmlns:behaviors="clr-namespace:RegistroUsuarios.Behaviors;assembly=RegistroUsuarios"
              x:Class="RegistroUsuarios.Views.Registrar"
              Title="Datos persona">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
-            <Image Source="paisaje1.jpg" 
+            <StackLayout>
+                <Image Source="paisaje1.jpg" 
                Aspect="AspectFill"
                    Margin="0"
                    HeightRequest="175"/>
-            <Image Source="icono2.png" 
+                <Image Source="icono2.png" 
                HorizontalOptions="Center"
                VerticalOptions="End"
                WidthRequest="90" 
                HeightRequest="90"
                    x:Name="imgUsuario"
                TranslationY="-56"/>
-                
+
                 <StackLayout x:Name="boxPersona" TranslationY="-74">
-                    <Label Text="Datos de persona" HorizontalOptions="CenterAndExpand"
+                    <Label Text="Datos personales" HorizontalOptions="CenterAndExpand"
                        HorizontalTextAlignment="Center"
                            FontSize="Medium" TextColor="Black"/>
-            <Grid Padding="5" Margin="0" >
-                <Grid Padding="0" Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Label Text="Nombre"
+                    <Grid Padding="5" Margin="0" >
+                        <Grid Padding="0" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Nombre"
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
                        Grid.Row="0" 
                        Grid.Column="0"/>
-                    <Entry Grid.Row="0"
-                           x:Name="txtNombre"
-                       Grid.Column="1"/>
-                    <Label Text="Apellido"
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="1" 
-                       Grid.Column="0" />
-                    <Entry  Grid.Row="1"
-                            x:Name="txtApellido"
-                        Grid.Column="1" />
-                    <Label Text="Email" 
+                            <Entry  Grid.Row="0"
+                                    Text="{Binding Nombre.Value, Mode=TwoWay}"
+                                    x:Name="txtNombre"
+                                    Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateNombreCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Nombre.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="1" Grid.Column="1"
+			                    Text="{Binding Nombre.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            <Label Text="Apellido"
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
                        Grid.Row="2" 
                        Grid.Column="0" />
-                    <Entry  Grid.Row="2"
-                            Keyboard="Email"
-                            x:Name="txtCorreo"
-                        Grid.Column="1" />
-                    <Label Text="Dirección" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="3" 
-                       Grid.Column="0" />
-                    <Entry  Grid.Row="3"
-                            x:Name="txtDireccion"
-                        Grid.Column="1" />
-                    <Label Text="Teléfono" 
+                            <Entry  Grid.Row="2"
+                            Text="{Binding Apellido.Value, Mode=TwoWay}"
+                            x:Name="txtApellido"
+                        Grid.Column="1" >
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateApellidoCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Apellido.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="3" Grid.Column="1"
+			                    Text="{Binding Apellido.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            <Label Text="Email" 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
                        Grid.Row="4" 
                        Grid.Column="0" />
-                    <Entry  Grid.Row="4"
+                            <Entry  Grid.Row="4"
+                            Keyboard="Email"
+                            Text="{Binding Correo.Value, Mode=TwoWay}"
+                            x:Name="txtCorreo"
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateCorreoCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Correo.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="5" Grid.Column="1"
+			                    Text="{Binding Correo.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            <Label Text="Dirección" 
+                           FontSize="Medium"
+                           TextColor="Black"
+                           VerticalOptions="Center"
+                       Grid.Row="6" 
+                       Grid.Column="0" />
+                            <Entry  Grid.Row="6"
+                            Text="{Binding Direccion.Value, Mode=TwoWay}"
+                            x:Name="txtDireccion"
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateDireccionCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Direccion.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="7" Grid.Column="1"
+			                    Text="{Binding Direccion.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            <Label Text="Teléfono" 
+                           FontSize="Medium"
+                           TextColor="Black"
+                           VerticalOptions="Center"
+                       Grid.Row="8" 
+                       Grid.Column="0" />
+                            <Entry  Grid.Row="8"
+                            Text="{Binding Telefono.Value, Mode=TwoWay}"
                             x:Name="txtTelefono"
-                        Grid.Column="1" />
-                    
-                </Grid>
-            </Grid>
-                <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateTelefonoCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Telefono.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="9" Grid.Column="1"
+			                    Text="{Binding Telefono.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+
+                        </Grid>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
                         <Button Text="Siguiente" x:Name="btnGuardar1"
                             Clicked="btnGuardar1_Clicked"></Button>
                     </StackLayout>
@@ -100,9 +219,11 @@
                         <Grid Padding="0" Margin="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"/>
@@ -116,38 +237,92 @@
                        Grid.Row="0" 
                        Grid.Column="0" />
                             <Entry  Grid.Row="0"
+                                    Text="{Binding Usuario.Value, Mode=TwoWay}"
                             x:Name="txtUsuario"
-                        Grid.Column="1" />
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateUsuarioCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Usuario.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="1" Grid.Column="1"
+			                    Text="{Binding Usuario.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
                             <Label Text="Clave" 
-                           FontSize="Medium"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                       Grid.Row="1" 
-                       Grid.Column="0" />
-                            <Entry  Grid.Row="1"
-                            IsPassword="True"
-                            x:Name="txtClave"
-                        Grid.Column="1" />
-                            <Label Text="Repetir clave" 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
                        Grid.Row="2" 
                        Grid.Column="0" />
                             <Entry  Grid.Row="2"
-                            x:Name="txtClaveRepetir"
-                                IsPassword="True"
-                        Grid.Column="1" />
-                            <Label Text="Admin." 
+                            IsPassword="True"
+                                    Text="{Binding Clave.Value, Mode=TwoWay}"
+                            x:Name="txtClave"
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateClaveCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Clave.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="3" Grid.Column="1"
+			                    Text="{Binding Clave.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            <Label Text="Repetir clave" 
                            FontSize="Medium"
                            TextColor="Black"
                            VerticalOptions="Center"
-                       Grid.Row="3" 
+                       Grid.Row="4" 
                        Grid.Column="0" />
-                            <Switch  Grid.Row="3"
-                            x:Name="txtRol"
-                             IsToggled="True"
-                        Grid.Column="1" />
+                            <Entry  Grid.Row="4"
+                            x:Name="txtClaveRepetir"
+                                IsPassword="True"
+                                    Text="{Binding Clave2.Value, Mode=TwoWay}"
+                        Grid.Column="1">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							            EventName="TextChanged"
+							            Command="{Binding ValidateClave2Command}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							            TargetType="Entry"
+							            Binding="{Binding Clave2.IsValid}"
+							            Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" 
+                                                Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <!-- Label de Error -->
+                            <Label 
+                                Grid.Row="5" Grid.Column="1"
+			                    Text="{Binding Clave2.Errores, Converter={StaticResource FirstValidationErrorConverter}}"
+			                    Style="{StaticResource ValidationErrorLabelStyle}" />
+                            
                         </Grid>
                     </Grid>
                     <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="Center">
@@ -158,7 +333,7 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-        
+
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
