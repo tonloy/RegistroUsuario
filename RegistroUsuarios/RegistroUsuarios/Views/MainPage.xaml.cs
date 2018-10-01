@@ -8,6 +8,7 @@ using RegistroUsuarios.ViewModels;
 using RegistroUsuarios.Models;
 using System.IO;
 using RegistroUsuarios.Views;
+using RegistroUsuarios.Utilitario;
 
 namespace RegistroUsuarios
 {
@@ -21,6 +22,7 @@ namespace RegistroUsuarios
         private string ubicacion = "";
         public static Usuario user = new Usuario();
         public static Persona _persona = new Persona();
+        private string claveEncriptada;
 
         public MainPage()
         {
@@ -39,7 +41,8 @@ namespace RegistroUsuarios
                 {
                     Usuario usrExiste = new Usuario(dbUsuario);
                     Persona persona = new Persona(dbPersona);
-                    var usuario = usrExiste.QueryAsincrona("Select * from Usuario where N_usuario='" + txtUsuario.Text + "' and Clave='" + txtPassword.Text + "'").Result;
+                    claveEncriptada = Seguridad.Encriptar(txtPassword.Text);
+                    var usuario = usrExiste.QueryAsincrona("Select * from Usuario where N_usuario='" + txtUsuario.Text + "' and Clave='" + claveEncriptada + "'").Result;
                     if (usuario.Count == 1)
                     {
                         foreach (var item in usuario)
@@ -51,12 +54,14 @@ namespace RegistroUsuarios
                         {
                             _persona = item;
                         }
-                        //await DisplayAlert("Bienvenido", _persona.Nombre, "Aceptar");
+                                                
                         await Navigation.PushAsync(new Inicio());
+                        txtUsuario.Text = "";
+                        txtPassword.Text = "";
                     }
                     else
                     {
-                        await DisplayAlert("Error", "El usuario ingresado no existe" + txtUsuario.Text, "Aceptar");
+                        await DisplayAlert("Error", "El usuario ingresado no existe -> " + txtUsuario.Text, "Aceptar");
                     }
                 }
                 else
@@ -66,7 +71,7 @@ namespace RegistroUsuarios
                 
             }catch(Exception er)
             {
-                await DisplayAlert("Error",er.Message, "Aceptar");
+                await DisplayAlert("Error","No hay usuarios registrados", "Aceptar");
             }
         }
     }

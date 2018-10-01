@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <ScrollView BackgroundColor="Silver">
             <StackLayout>
-                <Image Source="paisaje1.jpg" 
+                <Image Source="registro3.png" 
                Aspect="AspectFill"
                    Margin="0"
                    HeightRequest="175"/>
@@ -48,7 +48,8 @@
                                    Grid.Column="0"></Label>
                             <Entry x:Name="modId1" 
                                    Grid.Row="0"
-                                   Grid.Column="1" 
+                                   Grid.Column="1"
+                                   IsEnabled="False"
                                    Text="{Binding Id}"/>
 
                             <Label Text="Nombre"
@@ -139,6 +140,7 @@
                                    Grid.Column="0"></Label>
                             <Entry x:Name="modId2" 
                                    Grid.Row="0"
+                                   IsEnabled="False"
                                    Grid.Column="1" />
 
                             <Label Text="Usuario" 

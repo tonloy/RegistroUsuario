@@ -8,6 +8,7 @@ using RegistroUsuarios.Models;
 using RegistroUsuarios.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using RegistroUsuarios.Utilitario;
 
 namespace RegistroUsuarios.Views
 {
@@ -67,7 +68,7 @@ namespace RegistroUsuarios.Views
                     Usuario usr = new Usuario(dbUsuario);
                     Persona p = new Persona(dbPersona);
                     usr.N_usuario = txtUsuario.Text;
-                    usr.Clave = txtClave.Text;
+                    usr.Clave = Seguridad.Encriptar(txtClave.Text);
                     usr.Imagen = imgUsuario.Source.ToString();
                     //recupero la ultima persona insertada
                     var persona = p.QueryAsincrona("Select * from [Persona] order by Id desc limit 1").Result;
@@ -75,7 +76,7 @@ namespace RegistroUsuarios.Views
                     {
                         foreach (var item in persona)
                         {
-                            per = persona.ElementAt(0);
+                            per = item;
                         }
                     }
                     usr.Rol = 1;

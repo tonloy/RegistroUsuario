@@ -1,4 +1,5 @@
 ﻿using RegistroUsuarios.Models;
+using RegistroUsuarios.Utilitario;
 using RegistroUsuarios.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace RegistroUsuarios.Views
                     }
                     modId2.Text = usua.Id.ToString();
                     txtUsuario.Text = usua.N_usuario;
-                    txtClave.Text = usua.Clave;
+                    txtClave.Text = Seguridad.DesEncriptar(usua.Clave);
                     txtClaveRepetir.Text = usua.Clave;
                 }
             }catch(Exception e)
@@ -67,12 +68,12 @@ namespace RegistroUsuarios.Views
             _actualizarPersona.Direccion = this.txtDireccion.Text;
             _actualizarPersona.Correo = this.txtCorreo.Text;
             _actualizarPersona.Telefono = this.txtTelefono.Text;
-
+            _id= Int32.Parse(this.modId1.Text);
 
             var resultado = await _actualizarPersona.ActualizarTablaAsincrona(_actualizarPersona);
             if (resultado)
             {
-                await DisplayAlert("Exito", "El registro fue actualizado", "OK");
+                await DisplayAlert("Info", "Datos guardados", "OK");
                 CargarDatosUsuario();
                 boxUsuario.IsVisible = true;
                 boxPersona.IsVisible = false;
@@ -88,12 +89,13 @@ namespace RegistroUsuarios.Views
             Usuario _actualizarUsuario = new Usuario(this.dbUsuario);
             _actualizarUsuario.Id = Int32.Parse(this.modId2.Text);
             _actualizarUsuario.N_usuario = this.txtUsuario.Text;
-            _actualizarUsuario.Clave = this.txtClave.Text;
+            _actualizarUsuario.Clave = Seguridad.Encriptar(this.txtClave.Text);
+            _actualizarUsuario.IdPersona = _id;
 
             var resultado = await _actualizarUsuario.ActualizarTablaAsincrona(_actualizarUsuario);
             if (resultado)
             {
-                await DisplayAlert("Exito", "El registro fue actualizado", "OK");
+                await DisplayAlert("Exito", "El usuario fue actualizado", "OK");
                 await Navigation.PopModalAsync();
             }
             else

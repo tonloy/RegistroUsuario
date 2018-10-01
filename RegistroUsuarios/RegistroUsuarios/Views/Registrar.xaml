@@ -15,7 +15,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Image Source="paisaje1.jpg" 
+                <Image Source="registro3.png" 
                Aspect="AspectFill"
                    Margin="0"
                    HeightRequest="175"/>
@@ -181,6 +181,7 @@
                             <Entry  Grid.Row="8"
                             Text="{Binding Telefono.Value, Mode=TwoWay}"
                             x:Name="txtTelefono"
+                                    Keyboard="Numeric"
                         Grid.Column="1">
                                 <Entry.Behaviors>
                                     <behaviors:EventToCommandBehavior

@@ -27,9 +27,7 @@
                            HorizontalOptions="Center"
                            FontSize="Medium"></Label>
 
-                    <Label Text="Cristina Hernández" VerticalOptions="CenterAndExpand"
-                           HorizontalOptions="Center"
-                           FontSize="Medium"></Label>
+                    
 
                     <Label Text="Copyright ©"
                            VerticalOptions="FillAndExpand"

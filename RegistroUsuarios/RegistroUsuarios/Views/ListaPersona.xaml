@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:RegistroUsuarios.Views"
              x:Class="RegistroUsuarios.Views.ListaPersona"
              BackgroundImage="fondo2"
-             Title="Lista">
+             Title="Borrar registros">
     <ContentPage.Content>
         <StackLayout>
             <Frame BackgroundColor="Silver" Opacity="0.5" Margin="20,50,20,5" CornerRadius="10">
